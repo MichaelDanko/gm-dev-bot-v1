@@ -3,3 +3,4 @@ applications:
 - name: gm-dev-bot-v1
   memory: 256M
   disk_quota: 1024M
+  host: gm-dev-bot
