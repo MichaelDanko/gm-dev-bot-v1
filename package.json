@@ -20,5 +20,8 @@
     "dotenv": "^4.0.0",
     "restify": "^6.2.3",
     "watson-developer-cloud": "^2.41.1"
+  },
+  "devDependencies": {
+    "grunt-cli": "^1.2.0"
   }
 }
