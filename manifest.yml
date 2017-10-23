@@ -1,8 +1,8 @@
 ---
 applications:
 - name: gm-dev-bot-v1
-  memory: 256M
-  disk_quota: 1024M
+  memory: 128M
+  disk_quota: 128M
   host: gm-dev-bot
   env:
     env_type: production
