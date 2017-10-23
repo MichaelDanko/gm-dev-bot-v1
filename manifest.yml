@@ -2,4 +2,4 @@
 applications:
 - name: gm-dev-bot-v1
   memory: 256M
-  disk_quota: 512M
+  disk_quota: 1024M
