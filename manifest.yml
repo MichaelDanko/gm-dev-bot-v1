@@ -1,4 +1,4 @@
 ---
 applications:
 - name: gm-dev-bot-v1
-  memory: 64M
+  memory: 512M
