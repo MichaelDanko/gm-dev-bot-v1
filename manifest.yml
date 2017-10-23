@@ -4,3 +4,5 @@ applications:
   memory: 256M
   disk_quota: 1024M
   host: gm-dev-bot
+  env:
+    env_type: production
