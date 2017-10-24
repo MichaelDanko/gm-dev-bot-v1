@@ -70,17 +70,7 @@ let bot = new builder.UniversalBot(connector, function(session) {
     } else {
       console.log('message to watson')
       console.log(JSON.stringify(response, null, 2))
-      session.sendTyping();
-      setTimeout(function(){
-        session.send("hellooo reply")
-
-        var msg = new builder.Message()
-        .address(session.message.address)
-        .textFormat(builder.TextFormat.markdown)
-        .text(response.output.text);
-    
-        bot.send(msg, function(err) {});
-      }, 3000);
+      session.send(response.output.text)
       conversationContext.watsonContext = response.context
     }
   })
