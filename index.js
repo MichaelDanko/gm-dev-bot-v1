@@ -5,15 +5,15 @@ const restify = require('restify'),
 
 require('dotenv').config()
 
-var workspace = process.env.WORKSPACE_ID || ''
+var workspace = process.env.WATSON_WORKSPACE
 
 server.listen(process.env.port || process.env.PORT || 3978, () => {
   console.log(server.name, "+++", server.url)
 })
 
 var conversation = new Conversation({
-  username: process.env.CONVERSATION_USERNAME,
-  password: process.env.CONVERSATION_PASSWORD,
+  username: process.env.WATSON_USERNAME,
+  password: process.env.WATSON_PASSWORD,
   version_date: Conversation.VERSION_DATE_2017_05_26
 })
 
@@ -28,9 +28,9 @@ var connector = new builder.ChatConnector({
 
 server.post('/api/messages', connector.listen())
 
-function findOrCreateContext(convId) {
-  let contexts
+let contexts
 
+function findOrCreateContext(convId) {
   if (!contexts)
     contexts = []
   if (!contexts[convId]) {
