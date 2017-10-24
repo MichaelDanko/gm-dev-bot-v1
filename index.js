@@ -73,6 +73,13 @@ let bot = new builder.UniversalBot(connector, function(session) {
       session.sendTyping();
       setTimeout(function(){
         session.send(response.output.text)
+
+        var msg = new builder.Message()
+        .address(session.message.address)
+        .textFormat(builder.TextFormat.markdown)
+        .text(response.output.text);
+    
+        bot.send(msg, function(err) {});
       }, 3000);
       conversationContext.watsonContext = response.context
     }
