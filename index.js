@@ -72,7 +72,7 @@ let bot = new builder.UniversalBot(connector, function(session) {
       console.log(JSON.stringify(response, null, 2))
       session.sendTyping();
       setTimeout(function(){
-        session.send(response.output.text)
+        session.send("hellooo reply")
 
         var msg = new builder.Message()
         .address(session.message.address)
