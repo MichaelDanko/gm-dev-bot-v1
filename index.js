@@ -22,8 +22,8 @@ console.log("process.env.appID ")
 console.log("process.env.appPassword ")
 
 var connector = new builder.ChatConnector({
-  appId: process.env.appId,
-  appPassword: process.env.appPassword
+  appId: process.env.MICROSOFT_APP_ID,
+  appPassword: process.env.MICROSOFT_APP_PASSWORD
 })
 
 server.post('/api/messages', connector.listen())
