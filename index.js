@@ -5,15 +5,15 @@ const restify = require('restify'),
 
 require('dotenv').config()
 
-var workspace = '83e40a01-30fd-4fcd-958f-9f10f82700d0'
+var workspace = process.env.WATSON_WORKSPACE
 
 server.listen(process.env.port || process.env.PORT || 3978, () => {
   console.log(server.name, "+++", server.url)
 })
 
 var conversation = new Conversation({
-  username: 'bbb8723d-87cb-4081-9c87-c40ab5214c1d',
-  password: 'eCQjp7lyNb8Y',
+  username: process.env.WATSON_USERNAME,
+  password: process.env.WATSON_PASSWORD,
   version_date: Conversation.VERSION_DATE_2017_05_26
 })
 
