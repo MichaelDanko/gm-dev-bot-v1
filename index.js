@@ -70,7 +70,10 @@ let bot = new builder.UniversalBot(connector, function(session) {
     } else {
       console.log('message to watson')
       console.log(JSON.stringify(response, null, 2))
-      session.send(response.output.text)
+      session.sendTyping();
+      setTimeout(function(){
+        session.send(response.output.text)
+      }, 3000);
       conversationContext.watsonContext = response.context
     }
   })
