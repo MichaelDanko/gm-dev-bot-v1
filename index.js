@@ -4,7 +4,8 @@ const restify = require('restify'),
   server = restify.createServer(),
  // api_server = restify.createServer(),
   { Client } = require('pg'),
-  interceptUnknown = require('./modules/interceptUnknown.js')
+  interceptUnknown = require('./modules/interceptUnknown.js'),
+  seedDb = require('./modules/seedDb.js')
 
 require('dotenv').config()
 
@@ -15,6 +16,8 @@ const client = new Client({
 })
 
 client.connect()
+
+seedDb(client)
 
 // *** WATSON AND BOT CONNECTORS
 
