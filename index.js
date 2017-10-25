@@ -94,7 +94,7 @@ let bot = new builder.UniversalBot(connector, function(session) {
       }
       response.output.text.forEach(function(text) {
         session.send(text)
-      }
+      })
       conversationContext.watsonContext = response.context
     }
   })
