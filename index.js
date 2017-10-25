@@ -2,7 +2,7 @@ const restify = require('restify'),
   builder = require('botbuilder'),
   Conversation = require('watson-developer-cloud/conversation/v1'),
   server = restify.createServer(),
-  api_server = restify.createServer(),
+ // api_server = restify.createServer(),
   { Client } = require('pg'),
   interceptUnknown = require('./modules/interceptUnknown.js')
 
@@ -39,7 +39,7 @@ function respond(req, res, next) {
 //**************** SERVER SETUPS
 
 server.listen(process.env.port || process.env.PORT || 3978, () => {
-  console.log(server.name, "+++", server.url, "+++", server.port)
+  console.log(server.name, "+++", server.url)
 })
 
 server.post('/api/messages', connector.listen())
