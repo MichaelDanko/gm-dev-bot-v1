@@ -17,20 +17,20 @@ var conversation = new Conversation({
   version_date: Conversation.VERSION_DATE_2017_05_26
 })
 
-console.log("process.env.WORKSPACE_ID " + process.env.WORKSPACE_ID)
-console.log("process.env.appID " + process.env.appId)
-console.log("process.env.appPassword " + process.env.appPassword)
+console.log("process.env.WORKSPACE_ID 83e40a01-30fd-4fcd-958f-9f10f82700d0")
+console.log("process.env.appID ")
+console.log("process.env.appPassword ")
 
 var connector = new builder.ChatConnector({
-  appId: process.env.appId,
-  appPassword: process.env.appPassword
+  appId: process.env.MICROSOFT_APP_ID,
+  appPassword: process.env.MICROSOFT_APP_PASSWORD
 })
 
 server.post('/api/messages', connector.listen())
 
 let contexts
-
 function findOrCreateContext(convId) {
+
   if (!contexts)
     contexts = []
   if (!contexts[convId]) {
