@@ -2,7 +2,7 @@ const restify = require('restify'),
   builder = require('botbuilder'),
   Conversation = require('watson-developer-cloud/conversation/v1'),
   server = restify.createServer(),
-  api_server = resitfy.createServer(),
+  api_server = restify.createServer(),
   { Client } = require('pg'),
   interceptUnknown = require('./modules/interceptUnknown.js')
 
