@@ -48,7 +48,7 @@ server.post('/api/messages', connector.listen())
 //  console.log(server.name, "+++", server.url)
 //})
 
-server.get('/api/tab', respond)
+server.get('/api/:name', respond)
 
 
 //******************** BOT ENDPOINT
