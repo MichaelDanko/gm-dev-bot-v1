@@ -2,7 +2,8 @@ const restify = require('restify'),
   builder = require('botbuilder'),
   Conversation = require('watson-developer-cloud/conversation/v1'),
   server = restify.createServer(),
-  { Client } = require('pg')
+  { Client } = require('pg'),
+  interceptUnknown = require('./modules/interceptUnknown.js')
 
 require('dotenv').config()
 
@@ -13,22 +14,6 @@ const client = new Client({
 })
 
 client.connect()
-
-client.query('select current_date', (err, res) => {
-  if (err) throw err
-  for (let row of res.rows) {
-    console.log(JSON.stringify(row))
-  }
-  client.end()
-})
-
-//**************** SERVER SETUPS
-
-server.listen(process.env.port || process.env.PORT || 3978, () => {
-  console.log(server.name, "+++", server.url)
-})
-
-server.post('/api/messages', connector.listen())
 
 // *** WATSON AND BOT CONNECTORS
 
@@ -44,6 +29,14 @@ var connector = new builder.ChatConnector({
   appId: process.env.MICROSOFT_APP_ID,
   appPassword: process.env.MICROSOFT_APP_PASSWORD
 })
+
+//**************** SERVER SETUPS
+
+server.listen(process.env.port || process.env.PORT || 3978, () => {
+  console.log(server.name, "+++", server.url)
+})
+
+server.post('/api/messages', connector.listen())
 
 //******************** BOT ENDPOINT
 
@@ -88,6 +81,9 @@ let bot = new builder.UniversalBot(connector, function(session) {
       session.send(err)
     } else {
       console.log(JSON.stringify(response, null, 2))
+      if (response.output.text === "I don't know") {
+        interceptUnknown(client, session.message.text, response)
+      }
       session.send(response.output.text)
       conversationContext.watsonContext = response.context
     }
