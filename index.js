@@ -2,6 +2,7 @@ const restify = require('restify'),
   builder = require('botbuilder'),
   Conversation = require('watson-developer-cloud/conversation/v1'),
   server = restify.createServer(),
+  api_server = resitfy.createServer(),
   { Client } = require('pg'),
   interceptUnknown = require('./modules/interceptUnknown.js')
 
@@ -30,6 +31,11 @@ var connector = new builder.ChatConnector({
   appPassword: process.env.MICROSOFT_APP_PASSWORD
 })
 
+function respond(req, res, next) {
+    res.send('hello ' + req.params.name);
+    next();
+}
+//
 //**************** SERVER SETUPS
 
 server.listen(process.env.port || process.env.PORT || 3978, () => {
@@ -37,6 +43,13 @@ server.listen(process.env.port || process.env.PORT || 3978, () => {
 })
 
 server.post('/api/messages', connector.listen())
+
+api_server.listen(process.env.port || process.env.PORT || 3979, () => {
+  console.log(server.name, "+++", server.url)
+})
+
+api_server.get('/api/tab', respond))
+
 
 //******************** BOT ENDPOINT
 
