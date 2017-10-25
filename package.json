@@ -18,10 +18,11 @@
   "dependencies": {
     "botbuilder": "^3.11.0",
     "dotenv": "^4.0.0",
-    "restify": "^6.2.3",
-    "watson-developer-cloud": "^2.41.1",
+    "grunt": "^0.4.5",
     "grunt-cli": "^1.2.0",
-    "grunt": "^0.4.5"
+    "pg": "7.3.0",
+    "restify": "^6.2.3",
+    "watson-developer-cloud": "^2.41.1"
   },
   "devDependencies": {
     "grunt-cli": "^1.2.0"

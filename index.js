@@ -1,15 +1,23 @@
 const restify = require('restify'),
   builder = require('botbuilder'),
   Conversation = require('watson-developer-cloud/conversation/v1'),
-  server = restify.createServer()
+  server = restify.createServer(),
+  { Client } = require('pg'),
+  interceptUnknown = require('./modules/interceptUnknown.js')
 
 require('dotenv').config()
 
-var workspace = process.env.WATSON_WORKSPACE
+// ************** DATABASE
 
-server.listen(process.env.port || process.env.PORT || 3978, () => {
-  console.log(server.name, "+++", server.url)
+const client = new Client({
+  connectionString: process.env.DATABASE_URL
 })
+
+client.connect()
+
+// *** WATSON AND BOT CONNECTORS
+
+var workspace = process.env.WATSON_WORKSPACE
 
 var conversation = new Conversation({
   username: process.env.WATSON_USERNAME,
@@ -17,18 +25,23 @@ var conversation = new Conversation({
   version_date: Conversation.VERSION_DATE_2017_05_26
 })
 
-console.log("process.env.WORKSPACE_ID 83e40a01-30fd-4fcd-958f-9f10f82700d0")
-console.log("process.env.appID ")
-console.log("process.env.appPassword ")
-
 var connector = new builder.ChatConnector({
   appId: process.env.MICROSOFT_APP_ID,
   appPassword: process.env.MICROSOFT_APP_PASSWORD
 })
 
+//**************** SERVER SETUPS
+
+server.listen(process.env.port || process.env.PORT || 3978, () => {
+  console.log(server.name, "+++", server.url)
+})
+
 server.post('/api/messages', connector.listen())
 
+//******************** BOT ENDPOINT
+
 let contexts
+
 function findOrCreateContext(convId) {
 
   if (!contexts)
@@ -44,7 +57,6 @@ function findOrCreateContext(convId) {
 }
 
 let bot = new builder.UniversalBot(connector, function(session) {
-  console.log('builder connector')
   console.log('MESSAGE', JSON.stringify(session.message.text))
 
   let payload = {
@@ -67,11 +79,13 @@ let bot = new builder.UniversalBot(connector, function(session) {
 
     console.log('RESPONSE', response)
     if (err) {
-      console.log("HELLO")
+      console.log(err)
       session.send(err)
     } else {
-      console.log('message to watson')
       console.log(JSON.stringify(response, null, 2))
+      if (response.output.text === "I don't know") {
+        interceptUnknown(client, session.message.text, response)
+      }
       session.send(response.output.text)
       conversationContext.watsonContext = response.context
     }
