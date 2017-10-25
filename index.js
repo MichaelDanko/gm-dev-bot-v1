@@ -47,13 +47,6 @@ server.listen(process.env.port || process.env.PORT || 3978, () => {
 
 server.post('/api/messages', connector.listen())
 
-//api_server.listen(3979, () => {
-//  console.log(server.name, "+++", server.url)
-//})
-
-server.get('/api/:name', respond)
-
-
 //******************** BOT ENDPOINT
 
 let contexts
@@ -102,7 +95,9 @@ let bot = new builder.UniversalBot(connector, function(session) {
       if (response.output.text === "I don't know") {
         interceptUnknown(client, session.message.text, response)
       }
-      session.send(response.output.text)
+      response.output.text.forEach(function(text) {
+        session.send(text)
+      })
       conversationContext.watsonContext = response.context
     }
   })
