@@ -65,6 +65,7 @@ let bot = new builder.UniversalBot(connector, function(session) {
 
   conversation.message(payload, function(err, response) {
 
+    console.log('RESPONSE', response)
     if (err) {
       console.log("HELLO")
       session.send(err)
