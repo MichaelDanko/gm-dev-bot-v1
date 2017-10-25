@@ -39,7 +39,7 @@ function respond(req, res, next) {
 //**************** SERVER SETUPS
 
 server.listen(process.env.port || process.env.PORT || 3978, () => {
-  console.log(server.name, "+++", server.url)
+  console.log(server.name, "+++", server.url, "+++", server.port)
 })
 
 server.post('/api/messages', connector.listen())
