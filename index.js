@@ -44,11 +44,11 @@ server.listen(process.env.port || process.env.PORT || 3978, () => {
 
 server.post('/api/messages', connector.listen())
 
-api_server.listen(3979, () => {
-  console.log(server.name, "+++", server.url)
-})
+//api_server.listen(3979, () => {
+//  console.log(server.name, "+++", server.url)
+//})
 
-api_server.get('/api/tab', respond)
+server.get('/api/tab', respond)
 
 
 //******************** BOT ENDPOINT
