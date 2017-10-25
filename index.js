@@ -38,6 +38,7 @@ function findOrCreateContext(convId) {
       workspaceId: workspace,
       watsonContext: {}
     }
+    console.log(contexts)
   }
   return contexts[convId]
 }
