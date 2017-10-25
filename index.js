@@ -44,7 +44,7 @@ server.listen(process.env.port || process.env.PORT || 3978, () => {
 
 server.post('/api/messages', connector.listen())
 
-api_server.listen(process.env.port || process.env.PORT || 3979, () => {
+api_server.listen(3979, () => {
   console.log(server.name, "+++", server.url)
 })
 
