@@ -48,7 +48,7 @@ api_server.listen(process.env.port || process.env.PORT || 3979, () => {
   console.log(server.name, "+++", server.url)
 })
 
-api_server.get('/api/tab', respond))
+api_server.get('/api/tab', respond)
 
 
 //******************** BOT ENDPOINT
