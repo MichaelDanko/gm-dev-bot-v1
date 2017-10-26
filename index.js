@@ -85,7 +85,8 @@ let bot = new builder.UniversalBot(connector, function(session) {
     } else {
       console.log(JSON.stringify(response, null, 2))
 
-      if( (response.intents).length === 0 ) {
+      if (true) {
+//      if( (response.intents).length === 0 ) {
         requestData.question = response.input 
         requestData.entity = response.entities
         requestData.userId = response.context.conversation_id 
@@ -114,26 +115,3 @@ let bot = new builder.UniversalBot(connector, function(session) {
     }
   })
 })
-
-var requestData = {
-       "request": {
-           "slice": [
-               {
-                   "origin": "ZRH",
-                   "destination": "DUS",
-                   "date": "2014-12-02"
-               }
-           ],
-           "passengers": {
-               "adultCount": 1,
-               "infantInLapCount": 0,
-               "infantInSeatCount": 0,
-               "childCount": 0,
-               "seniorCount": 0
-           },
-           "solutions": 2,
-           "refundable": false
-       }
-   }
-
-
