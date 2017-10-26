@@ -22,6 +22,14 @@ var connector = new builder.ChatConnector({
 //
 //**************** SERVER SETUPS
 
+server.use(
+  function crossOrigin(req,res,next){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    return next();
+  }
+);
+
 server.listen(process.env.port || process.env.PORT || 3978, () => {
   console.log(server.name, "+++", server.url)
 })
@@ -75,7 +83,7 @@ let bot = new builder.UniversalBot(connector, function(session) {
       console.log(JSON.stringify(response, null, 2))
       if (response.output.text[0].includes("Can you be more specific")) {
         // interceptUnknown(client, response.input.text, response.entities[0].entity)
-        // TODO SEND REQUEST TO APIs
+        // TODO SEND POST REQUEST TO APIs
       }
       response.output.text.forEach(function(text) {
         session.send(text)
