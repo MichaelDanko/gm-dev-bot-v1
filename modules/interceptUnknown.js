@@ -34,7 +34,7 @@ function interceptUnkown(client, question, entity, userId) {
                 (
                     ${questId}
                   , ${userId}
-                )
+                );
               `, (err, res) => {
     if (err) throw err
     console.log(res)

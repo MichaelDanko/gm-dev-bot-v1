@@ -1,5 +1,5 @@
 function seedDatabase(client) {
-
+/*NOT UPDATED*/
   client.query(`
           CREATE SEQUENCE IF NOT EXISTS USER_TO_QUEST_SEQ  INCREMENT;
           CREATE SEQUENCE IF NOT EXISTS QUEST_TO_ANSWER_SEQ INCREMENT;
@@ -23,7 +23,7 @@ function seedDatabase(client) {
           (
               ID          SERIAL  PRIMARY KEY   DEFAULT NEXTVAL('USER_TO_QUEST_SEQ') NOT NULL
             , QUEST_ID    UUID    REFERENCES QUESTIONS (QUEST_ID)  NOT NULL
-            , USER_ID   UUID    REFERENCES ANSWERS (ANSWER_ID)   NOT NULL
+            , USER_ID     UUID    REFERENCES ANSWERS (ANSWER_ID)   NOT NULL
             , CREATED_ON  timestamp default current_timestamp NOT NULL
           );
 
