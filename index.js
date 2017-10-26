@@ -48,9 +48,6 @@ function findOrCreateContext(convId) {
   return contexts[convId]
 }
 
-//requestData.question = session.message.text
-requestData.entity = "test entity"
-requestData.userId = "test user"
 
 let bot = new builder.UniversalBot(connector, function(session) {
   console.log('MESSAGE', JSON.stringify(session.message.text))
@@ -82,7 +79,12 @@ let bot = new builder.UniversalBot(connector, function(session) {
       session.send(err)
     } else {
       console.log(JSON.stringify(response, null, 2))
+
       if( !$.isArray(repsonse.intents) ||  !(repsonse.intents).length ) {
+        requestData.question = response.input 
+        requestData.entity = response.entities
+        requestData.userId = response.context.conversation_id 
+
         request({
           url: url,
           method: post,
