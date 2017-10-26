@@ -1,3 +1,5 @@
+var request = require("request")
+
 const restify = require('restify'),
   builder = require('botbuilder'),
   Conversation = require('watson-developer-cloud/conversation/v1'),
@@ -6,6 +8,7 @@ const restify = require('restify'),
 require('dotenv').config()
 
 // *** WATSON AND BOT CONNECTORS
+var requestData = {}
 
 var workspace = process.env.WATSON_WORKSPACE
 
@@ -31,7 +34,6 @@ server.post('/api/messages', connector.listen())
 //******************** BOT ENDPOINT
 
 let contexts
-
 function findOrCreateContext(convId) {
 
   if (!contexts)
@@ -46,6 +48,10 @@ function findOrCreateContext(convId) {
   return contexts[convId]
 }
 
+requestData.question = session.message.text
+requestData.entity = "test entity"
+requestData.userId = "test user"
+CONSOLE.LOG(REQUESTDATA, requestData);
 let bot = new builder.UniversalBot(connector, function(session) {
   console.log('MESSAGE', JSON.stringify(session.message.text))
 
@@ -73,15 +79,52 @@ let bot = new builder.UniversalBot(connector, function(session) {
       session.send(err)
     } else {
       console.log(JSON.stringify(response, null, 2))
-      if (response.output.text[0].includes("Can you be more specific")) {
-        // interceptUnknown(client, response.input.text, response.entities[0].entity)
-        // TODO SEND REQUEST TO APIs
-      }
+      if( !$.isArray(repsonse.intents) ||  !(repsonse.intents).length ) {
+        request({
+          url: url,
+          method: post,
+          json: requestData,
+          }, function (error, response, body) {
+             if (!error && response.statusCode === 200) {
+                     console.log(body)
+                 }
+             else {
+                 
+                     console.log("error: " + error)
+                     console.log("response.statusCode: " + response.statusCode)
+                     console.log("response.statusText: " + response.statusText)
+                 }
+        })
+      }            //handler either not an array or empty array
+        //post to database api 
+      
       response.output.text.forEach(function(text) {
         session.send(text)
       })
       conversationContext.watsonContext = response.context
     }
   })
-
 })
+
+var requestData = {
+       "request": {
+           "slice": [
+               {
+                   "origin": "ZRH",
+                   "destination": "DUS",
+                   "date": "2014-12-02"
+               }
+           ],
+           "passengers": {
+               "adultCount": 1,
+               "infantInLapCount": 0,
+               "infantInSeatCount": 0,
+               "childCount": 0,
+               "seniorCount": 0
+           },
+           "solutions": 2,
+           "refundable": false
+       }
+   }
+
+
