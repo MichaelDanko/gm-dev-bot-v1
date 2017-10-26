@@ -3,13 +3,14 @@ function main(server, client) {
   server.get('/api/getQuestions/', function(req, res, next) {
     client.query(`
                   SELECT
-                      QUESTIONS.QUESTION
-                    , USER_TO_QUESTION.USER_ID
-                  FROM QUESTIONS
+                      q.QUESTION
+                    , uq.USER_ID
+                  FROM QUESTIONS q
                   LEFT JOIN
-                    USER_TO_QUESTION
-                  ON QUESTIONS.QUEST_ID = USER_TO_QUESTION.QUEST_ID;
-                `, (err, resp) => {
+                    USER_TO_QUESTION uq
+                  ON q.QUEST_ID = uq.QUEST_ID;
+                `
+                , (err, resp) => {
                     if (err) throw err
                     console.log(resp.rows)
                     res.send(resp.rows)
