@@ -25,6 +25,14 @@ var connector = new builder.ChatConnector({
 //
 //**************** SERVER SETUPS
 
+server.use(
+  function crossOrigin(req,res,next){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    return next();
+  }
+);
+
 server.listen(process.env.port || process.env.PORT || 3978, () => {
   console.log(server.name, "+++", server.url)
 })
@@ -99,7 +107,6 @@ let bot = new builder.UniversalBot(connector, function(session) {
         })
       }            //handler either not an array or empty array
         //post to database api 
-      
       response.output.text.forEach(function(text) {
         session.send(text)
       })
