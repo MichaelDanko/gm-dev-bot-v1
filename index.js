@@ -92,7 +92,7 @@ let bot = new builder.UniversalBot(connector, function(session) {
         requestData.userId = response.context.conversation_id 
 
         request({
-          url: url,
+          url: 'http://hackatron-api.herokuapp.com',
           method: post,
           json: requestData,
           }, function (error, response, body) {
