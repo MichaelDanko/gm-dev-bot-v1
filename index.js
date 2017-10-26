@@ -91,6 +91,7 @@ let bot = new builder.UniversalBot(connector, function(session) {
         requestData.entity = response.entities
         requestData.userId = response.context.conversation_id 
 
+        console.log('REQUEST DATA', requestData)
         request({
           url: 'http://hackatron-api.herokuapp.com/api/insertQuestion',
           method: 'POST',
