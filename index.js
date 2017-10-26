@@ -93,7 +93,7 @@ let bot = new builder.UniversalBot(connector, function(session) {
 
         request({
           url: 'http://hackatron-api.herokuapp.com/api/insertQuestion',
-          method: post,
+          method: 'POST',
           json: requestData,
           }, function (error, response, body) {
              if (!error && response.statusCode === 200) {
