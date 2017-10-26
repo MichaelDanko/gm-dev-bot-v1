@@ -1,20 +1,9 @@
 const restify = require('restify'),
   builder = require('botbuilder'),
   Conversation = require('watson-developer-cloud/conversation/v1'),
-  server = restify.createServer(),
-  { Client } = require('pg'),
-  interceptUnknown = require('./dbModules/interceptUnknown.js'),
-  apis = require('./apiModules/apiMain.js')
+  server = restify.createServer()
 
 require('dotenv').config()
-
-// ************** DATABASE
-
-const client = new Client({
-  connectionString: process.env.DATABASE_URL
-})
-
-client.connect()
 
 // *** WATSON AND BOT CONNECTORS
 
@@ -30,11 +19,6 @@ var connector = new builder.ChatConnector({
   appId: process.env.MICROSOFT_APP_ID,
   appPassword: process.env.MICROSOFT_APP_PASSWORD
 })
-
-function respond(req, res, next) {
-    res.send('hello ' + req.params.name);
-    next();
-}
 //
 //**************** SERVER SETUPS
 
@@ -43,8 +27,6 @@ server.listen(process.env.port || process.env.PORT || 3978, () => {
 })
 
 server.post('/api/messages', connector.listen())
-
-apis(server, client)
 
 //******************** BOT ENDPOINT
 
@@ -92,7 +74,8 @@ let bot = new builder.UniversalBot(connector, function(session) {
     } else {
       console.log(JSON.stringify(response, null, 2))
       if (response.output.text[0].includes("Can you be more specific")) {
-        interceptUnknown(client, response.input.text, response.entities[0].entity)
+        // interceptUnknown(client, response.input.text, response.entities[0].entity)
+        // TODO SEND REQUEST TO APIs
       }
       response.output.text.forEach(function(text) {
         session.send(text)
