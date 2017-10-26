@@ -87,7 +87,7 @@ let bot = new builder.UniversalBot(connector, function(session) {
 
       if (true) {
 //      if( (response.intents).length === 0 ) {
-        requestData.question = response.input.text 
+        requestData.question = response.input.text.replace("<a>hackatron-chat-bot</a>", "") 
         requestData.entity = response.entities
         requestData.userId = response.context.conversation_id 
 
@@ -107,6 +107,7 @@ let bot = new builder.UniversalBot(connector, function(session) {
                      console.log("response.statusText: " + response.statusText)
                  }
         })
+        session.send('I could not find an answer to your query, I am sending your question')
       }            //handler either not an array or empty array
         //post to database api 
       response.output.text.forEach(function(text) {
