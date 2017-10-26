@@ -2,9 +2,9 @@ const restify = require('restify'),
   builder = require('botbuilder'),
   Conversation = require('watson-developer-cloud/conversation/v1'),
   server = restify.createServer(),
- // api_server = restify.createServer(),
   { Client } = require('pg'),
-  interceptUnknown = require('./modules/interceptUnknown.js')
+  interceptUnknown = require('./dbModules/interceptUnknown.js'),
+  apis = require('./apiModules/apiMain.js')
 
 require('dotenv').config()
 
@@ -43,6 +43,8 @@ server.listen(process.env.port || process.env.PORT || 3978, () => {
 })
 
 server.post('/api/messages', connector.listen())
+
+apis(server, client)
 
 //******************** BOT ENDPOINT
 
@@ -89,8 +91,8 @@ let bot = new builder.UniversalBot(connector, function(session) {
       session.send(err)
     } else {
       console.log(JSON.stringify(response, null, 2))
-      if (response.output.text === "I don't know") {
-        interceptUnknown(client, session.message.text, response)
+      if (response.output.text[0].includes("Can you be more specific")) {
+        interceptUnknown(client, response.input.text, response.entities[0].entity)
       }
       response.output.text.forEach(function(text) {
         session.send(text)

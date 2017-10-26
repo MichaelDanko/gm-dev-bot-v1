@@ -8,7 +8,7 @@ function guid() {
     s4() + '-' + s4() + s4() + s4();
 }
 
-function interceptUnkown(client, question, entity, userId) {
+function interceptUnkown(client, question, entity = 'No Entity', userId = 'Unknown User') {
 
   let questId = guid()
 
@@ -20,9 +20,9 @@ function interceptUnkown(client, question, entity, userId) {
                   , ENTITY
                 )
                 VALUES (
-                    ${questId}
-                  , ${question}
-                  , ${entity}
+                    '${questId}'
+                  , '${question}'
+                  , '${entity}'
                 );
 
                 INSERT INTO USER_TO_QUESTION
@@ -32,8 +32,8 @@ function interceptUnkown(client, question, entity, userId) {
                 )
                 VALUES
                 (
-                    ${questId}
-                  , ${userId}
+                    '${questId}'
+                  , '${userId}'
                 );
               `, (err, res) => {
     if (err) throw err
