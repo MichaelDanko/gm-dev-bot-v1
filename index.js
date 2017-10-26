@@ -77,7 +77,7 @@ let bot = new builder.UniversalBot(connector, function(session) {
     } else {
       console.log(JSON.stringify(response, null, 2))
 
-      if( (repsonse.intents).length === 0 ) {
+      if( (response.intents).length === 0 ) {
         requestData.question = response.input 
         requestData.entity = response.entities
         requestData.userId = response.context.conversation_id 
