@@ -87,7 +87,7 @@ let bot = new builder.UniversalBot(connector, function(session) {
 
       if (true) {
 //      if( (response.intents).length === 0 ) {
-        requestData.question = response.input.text.replace("<a>hackatron-chat-bot</a>", "") 
+        requestData.question = response.input.text.replace("<at>hackatron-chat-bot</at>", "") 
         requestData.entity = response.entities
         requestData.userId = response.context.conversation_id 
 
