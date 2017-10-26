@@ -107,12 +107,13 @@ let bot = new builder.UniversalBot(connector, function(session) {
                      console.log("response.statusText: " + response.statusText)
                  }
         })
-        session.send('I could not find an answer to your query, I am sending your question')
-      }            //handler either not an array or empty array
-        //post to database api 
-      response.output.text.forEach(function(text) {
-        session.send(text)
-      })
+        session.send('I couldn\'t find an answer to your question, so I\'m sending it to the message board to see if anyone else knows the answer.')
+      }
+      else {
+        response.output.text.forEach(function(text) {
+          session.send(text)
+        })
+      }
       conversationContext.watsonContext = response.context
     }
   })
