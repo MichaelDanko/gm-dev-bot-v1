@@ -51,7 +51,7 @@ function findOrCreateContext(convId) {
 //requestData.question = session.message.text
 requestData.entity = "test entity"
 requestData.userId = "test user"
-console.log(REQUESTDATA, requestData);
+console.log('REQUESTDATA', requestData);
 
 let bot = new builder.UniversalBot(connector, function(session) {
   console.log('MESSAGE', JSON.stringify(session.message.text))
