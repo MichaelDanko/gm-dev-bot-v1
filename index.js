@@ -51,9 +51,6 @@ function findOrCreateContext(convId) {
 
 let bot = new builder.UniversalBot(connector, function(session) {
   console.log('MESSAGE', JSON.stringify(session.message.text))
-  requestData.question = session.message.text
-  console.log('REQUESTDATA', requestData);
-
 
   let payload = {
     workspace_id: workspace,
